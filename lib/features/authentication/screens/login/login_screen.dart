@@ -1,11 +1,30 @@
+import 'dart:async';
+
+import 'package:a_chat/features/authentication/controllers/login/login_controller.dart';
 import 'package:a_chat/util/constants/image_strings.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/constants/texts.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final LoginController controller = Get.put(LoginController());
+
+  @override
+  void initState() {
+    Timer(const Duration(milliseconds: 500), () {
+      controller.statAnimation();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +40,17 @@ class LoginScreen extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            AnimatedPositioned(
-              top: AHelperFunctions.screenHeight() * .1,
-              left: AHelperFunctions.screenWidth() * .25,
-              width: AHelperFunctions.screenWidth() * .5,
-              duration: const Duration(seconds: 2),
-              child: Image.asset(AImages.googleLogo),
-            ),
+            Obx(() {
+              return AnimatedPositioned(
+                top: AHelperFunctions.screenHeight() * .1,
+                left: controller.isAnimation.value
+                    ? AHelperFunctions.screenWidth() * .25
+                    : -AHelperFunctions.screenWidth() * .5,
+                width: AHelperFunctions.screenWidth() * .5,
+                duration: const Duration(seconds: 2),
+                child: Image.asset(AImages.googleLogo),
+              );
+            }),
             Positioned(
               bottom: AHelperFunctions.screenHeight() * .2,
               left: AHelperFunctions.screenWidth() * .1,
