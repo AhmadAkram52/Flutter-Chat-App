@@ -1,5 +1,7 @@
+import 'package:a_chat/util/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,14 +12,19 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         leading: const Icon(CupertinoIcons.home),
         title: const Text('A Chat'),
+        backgroundColor: AColors.primary,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(
+              onPressed: () {
+                Get.toNamed('/login');
+              },
+              icon: const Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_comment_rounded),
       ),
     );
   }

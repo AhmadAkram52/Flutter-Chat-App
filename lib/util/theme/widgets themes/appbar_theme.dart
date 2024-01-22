@@ -3,12 +3,15 @@ import 'package:a_chat/util/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class AAppBar {
+  AAppBar._();
+
   /// Light AppBar
   static const AppBarTheme lightAppBar = AppBarTheme(
     elevation: 5,
     centerTitle: false,
     scrolledUnderElevation: 0,
-    backgroundColor: AColors.primary,
+    backgroundColor: Colors.transparent,
+    surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: AColors.white, size: ASizes.iconMd),
     actionsIconTheme: IconThemeData(color: AColors.white, size: ASizes.iconMd),
     titleTextStyle: TextStyle(
@@ -20,7 +23,8 @@ class AAppBar {
     elevation: 5,
     centerTitle: false,
     scrolledUnderElevation: 0,
-    backgroundColor: AColors.primary,
+    backgroundColor: Colors.transparent,
+    surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: AColors.white, size: ASizes.iconMd),
     actionsIconTheme: IconThemeData(color: AColors.white, size: ASizes.iconMd),
     titleTextStyle: TextStyle(

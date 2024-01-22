@@ -2,6 +2,8 @@ import 'package:a_chat/util/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class AFloatingActionButtonTheme {
+  AFloatingActionButtonTheme._();
+
   /// Light FloatingActionButton
   static const FloatingActionButtonThemeData lightFloatingBtn =
       FloatingActionButtonThemeData(
