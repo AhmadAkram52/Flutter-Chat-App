@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class Routes {
   static final List<GetPage> pageRoutes = [
-    GetPage(name: '/', page: () => const HomeScreen()),
-    GetPage(name: '/login', page: () => const LoginScreen()),
+    GetPage(name: '/home', page: () => const HomeScreen()),
+    GetPage(name: '/', page: () => const LoginScreen()),
   ];
 }

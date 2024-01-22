@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Obx(() {
               return AnimatedPositioned(
                 top: AHelperFunctions.screenHeight() * .1,
-                left: controller.isAnimation.value
+                right: controller.isAnimation.value
                     ? AHelperFunctions.screenWidth() * .25
                     : -AHelperFunctions.screenWidth() * .5,
                 width: AHelperFunctions.screenWidth() * .5,
@@ -57,7 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
               width: AHelperFunctions.screenWidth() * .8,
               height: AHelperFunctions.screenWidth() * .15,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Get.offAllNamed('/home');
+                },
                 icon: Image.asset(
                   AImages.googleLogo,
                   height: ASizes.iconXl,
