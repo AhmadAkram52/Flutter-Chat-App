@@ -28,53 +28,51 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text(
-            ATexts.welcomeTo,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          ATexts.welcomeTo,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
-        body: Stack(
-          children: [
-            Obx(() {
-              return AnimatedPositioned(
-                top: AHelperFunctions.screenHeight() * .1,
-                right: controller.isAnimation.value
-                    ? AHelperFunctions.screenWidth() * .25
-                    : -AHelperFunctions.screenWidth() * .5,
-                width: AHelperFunctions.screenWidth() * .5,
-                duration: const Duration(seconds: 2),
-                child: Image.asset(AImages.googleLogo),
-              );
-            }),
-            Positioned(
-              bottom: AHelperFunctions.screenHeight() * .2,
-              left: AHelperFunctions.screenWidth() * .1,
-              width: AHelperFunctions.screenWidth() * .8,
-              height: AHelperFunctions.screenWidth() * .15,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Get.offAllNamed('/home');
-                },
-                icon: Image.asset(
-                  AImages.googleLogo,
-                  height: ASizes.iconXl * 1.3,
-                ),
-                label: Text(
-                  ATexts.signInWithGoogle,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .apply(color: Colors.white),
-                ),
+      ),
+      body: Stack(
+        children: [
+          Obx(() {
+            return AnimatedPositioned(
+              top: AHelperFunctions.screenHeight() * .1,
+              right: controller.isAnimation.value
+                  ? AHelperFunctions.screenWidth() * .25
+                  : -AHelperFunctions.screenWidth() * .5,
+              width: AHelperFunctions.screenWidth() * .5,
+              duration: const Duration(seconds: 2),
+              child: Image.asset(AImages.googleLogo),
+            );
+          }),
+          Positioned(
+            bottom: AHelperFunctions.screenHeight() * .2,
+            left: AHelperFunctions.screenWidth() * .1,
+            width: AHelperFunctions.screenWidth() * .8,
+            height: AHelperFunctions.screenWidth() * .15,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Get.offAllNamed('/home');
+              },
+              icon: Image.asset(
+                AImages.googleLogo,
+                height: ASizes.iconXl * 1.3,
+              ),
+              label: Text(
+                ATexts.signInWithGoogle,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .apply(color: Colors.white),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:a_chat/features/authentication/controllers/splash/splash%20contr
 import 'package:a_chat/util/constants/image_strings.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,6 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     Timer(const Duration(seconds: 3), () {
       ctrl.goToLogin();
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      SystemChrome.setSystemUIOverlayStyle(
+          const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     });
     super.initState();
   }
@@ -30,30 +34,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            AnimatedPositioned(
-              top: AHelperFunctions.screenHeight() * .2,
-              left: ctrl.startAnimate.value
-                  ? AHelperFunctions.screenWidth() * .1
-                  : AHelperFunctions.screenWidth() * .25,
-              width: ctrl.startAnimate.value
-                  ? AHelperFunctions.screenWidth() * .8
-                  : AHelperFunctions.screenWidth() * .5,
-              duration: const Duration(seconds: 2),
-              child: Image.asset(AImages.chatIcon),
+      body: Stack(
+        children: [
+          AnimatedPositioned(
+            top: AHelperFunctions.screenHeight() * .2,
+            left: ctrl.startAnimate.value
+                ? AHelperFunctions.screenWidth() * .1
+                : AHelperFunctions.screenWidth() * .25,
+            width: ctrl.startAnimate.value
+                ? AHelperFunctions.screenWidth() * .8
+                : AHelperFunctions.screenWidth() * .5,
+            duration: const Duration(seconds: 2),
+            child: Image.asset(AImages.chatIcon),
+          ),
+          Positioned(
+            bottom: AHelperFunctions.screenHeight() * .2,
+            width: AHelperFunctions.screenWidth(),
+            child: Text(
+              "Developed By Ahmad Akram😍!",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Positioned(
-              bottom: AHelperFunctions.screenHeight() * .2,
-              left: AHelperFunctions.screenWidth() * .1,
-              child: Text(
-                "Developed By Ahmad Akram!",
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
