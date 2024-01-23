@@ -62,9 +62,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 icon: Image.asset(
                   AImages.googleLogo,
-                  height: ASizes.iconXl,
+                  height: ASizes.iconXl * 1.3,
                 ),
-                label: const Text(ATexts.signInWithGoogle),
+                label: Text(
+                  ATexts.signInWithGoogle,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .apply(color: Colors.white),
+                ),
               ),
             ),
           ],

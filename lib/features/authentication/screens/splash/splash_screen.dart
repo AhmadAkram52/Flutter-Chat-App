@@ -31,12 +31,28 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: AnimatedContainer(
-          width: ctrl.startAnimate.value
-              ? AHelperFunctions.screenWidth() * .8
-              : AHelperFunctions.screenWidth() * .5,
-          duration: const Duration(seconds: 3),
-          child: Image.asset(AImages.chatIcon),
+        child: Stack(
+          children: [
+            AnimatedPositioned(
+              top: AHelperFunctions.screenHeight() * .2,
+              left: ctrl.startAnimate.value
+                  ? AHelperFunctions.screenWidth() * .1
+                  : AHelperFunctions.screenWidth() * .25,
+              width: ctrl.startAnimate.value
+                  ? AHelperFunctions.screenWidth() * .8
+                  : AHelperFunctions.screenWidth() * .5,
+              duration: const Duration(seconds: 2),
+              child: Image.asset(AImages.chatIcon),
+            ),
+            Positioned(
+              bottom: AHelperFunctions.screenHeight() * .2,
+              left: AHelperFunctions.screenWidth() * .1,
+              child: Text(
+                "Developed By Ahmad Akram!",
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
+          ],
         ),
       ),
     );

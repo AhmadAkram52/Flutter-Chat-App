@@ -9,9 +9,14 @@ class Routes {
       name: '/login',
       page: () => const LoginScreen(),
       transition: Transition.zoom,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 1000),
     ),
-    GetPage(name: '/home', page: () => const HomeScreen()),
+    GetPage(
+      name: '/home',
+      page: () => const HomeScreen(),
+      transition: Transition.zoom,
+      transitionDuration: const Duration(milliseconds: 1000),
+    ),
     GetPage(name: '/', page: () => const SplashScreen()),
   ];
 }
