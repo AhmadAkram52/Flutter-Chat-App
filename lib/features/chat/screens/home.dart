@@ -1,7 +1,6 @@
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,11 +13,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('A Chat'),
         backgroundColor: AColors.primary,
         actions: [
-          IconButton(
-              onPressed: () {
-                Get.toNamed('/login');
-              },
-              icon: const Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
         ],
       ),

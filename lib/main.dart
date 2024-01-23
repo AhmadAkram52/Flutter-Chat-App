@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  _initializeFirebase();
+  runApp(const AChatApp());
+}
+
+_initializeFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const AChatApp());
 }
