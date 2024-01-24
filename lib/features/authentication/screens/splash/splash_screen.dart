@@ -15,18 +15,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  SplashController ctrl = Get.put(SplashController());
+  final SplashController ctrl = Get.put(SplashController());
 
   @override
   void initState() {
     Timer(const Duration(milliseconds: 100), () {
       ctrl.startAnimation();
     });
-    Timer(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       ctrl.goToLogin();
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-      SystemChrome.setSystemUIOverlayStyle(
-          const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     });
     super.initState();
   }

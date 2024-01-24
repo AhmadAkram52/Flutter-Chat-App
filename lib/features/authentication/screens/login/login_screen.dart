@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:a_chat/features/authentication/controllers/login/login_controller.dart';
 import 'package:a_chat/util/constants/image_strings.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/constants/texts.dart';
+import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    Timer(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       controller.statAnimation();
     });
     super.initState();
@@ -41,13 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Obx(() {
             return AnimatedPositioned(
-              top: AHelperFunctions.screenHeight() * .1,
+              top: AHelperFunctions.screenHeight() * .15,
               right: controller.isAnimation.value
                   ? AHelperFunctions.screenWidth() * .25
                   : -AHelperFunctions.screenWidth() * .5,
               width: AHelperFunctions.screenWidth() * .5,
               duration: const Duration(seconds: 2),
-              child: Image.asset(AImages.googleLogo),
+              child: Image.asset(AImages.chatIcon),
             );
           }),
           Positioned(
@@ -57,7 +56,11 @@ class _LoginScreenState extends State<LoginScreen> {
             height: AHelperFunctions.screenWidth() * .15,
             child: ElevatedButton.icon(
               onPressed: () {
-                Get.offAllNamed('/home');
+                AuthHelper().signInWithGoogle().then((user) {
+                  // log(user?.uid as num);
+                  AHelperFunctions.showSnackBar('SignIn Success');
+                  Get.offAllNamed('/home');
+                });
               },
               icon: Image.asset(
                 AImages.googleLogo,

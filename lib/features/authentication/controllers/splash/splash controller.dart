@@ -1,3 +1,4 @@
+import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
@@ -7,7 +8,11 @@ class SplashController extends GetxController {
     startAnimate.value = true;
   }
 
-  goToLogin() {
-    Get.offAllNamed('/login');
+  goToLogin() async {
+    if (AuthHelper().isUserLogin()) {
+      Get.offAllNamed('/home');
+    } else {
+      Get.offAllNamed('/login');
+    }
   }
 }

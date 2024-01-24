@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '823625903410',
     projectId: 'a-chat-db3ab',
     storageBucket: 'a-chat-db3ab.appspot.com',
+    androidClientId: '823625903410-ei6jv31u48l59akqs7mj4tt50bobekr0.apps.googleusercontent.com',
+    iosClientId: '823625903410-01lstd804sfko85pv6vsrj66fmptievi.apps.googleusercontent.com',
     iosBundleId: 'com.example.aChat',
   );
 }
