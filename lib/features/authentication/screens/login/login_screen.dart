@@ -56,10 +56,14 @@ class _LoginScreenState extends State<LoginScreen> {
             height: AHelperFunctions.screenWidth() * .15,
             child: ElevatedButton.icon(
               onPressed: () {
+                AHelperFunctions.showProgressBar();
                 AuthHelper().signInWithGoogle().then((user) {
-                  // log(user?.uid as num);
-                  AHelperFunctions.showSnackBar('SignIn Success');
-                  Get.offAllNamed('/home');
+                  Navigator.pop(context);
+                  if (user != null) {
+                    // log(user?.uid as num);
+                    AHelperFunctions.showSnackBar(msg: 'SignIn Success');
+                    Get.offAllNamed('/home');
+                  }
                 });
               },
               icon: Image.asset(

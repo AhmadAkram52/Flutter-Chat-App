@@ -1,3 +1,4 @@
+import 'package:a_chat/util/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -36,9 +37,13 @@ class AHelperFunctions {
     }
   }
 
-  static void showSnackBar(String message) {
+  static void showSnackBar({required String msg, Color? color}) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
-      SnackBar(content: Text(message)),
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: color ?? AColors.info,
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 
@@ -55,6 +60,17 @@ class AHelperFunctions {
               child: const Text('OK'),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  static void showProgressBar() {
+    showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
         );
       },
     );

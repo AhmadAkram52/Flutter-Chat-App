@@ -8,7 +8,7 @@ class SplashController extends GetxController {
     startAnimate.value = true;
   }
 
-  goToLogin() async {
+  navToNext() async {
     if (AuthHelper().isUserLogin()) {
       Get.offAllNamed('/home');
     } else {

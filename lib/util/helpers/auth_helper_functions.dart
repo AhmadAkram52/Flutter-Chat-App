@@ -1,3 +1,4 @@
+import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:a_chat/util/local%20storage/preferences_utility.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +38,8 @@ class AuthHelper {
 
       return user;
     } catch (e) {
-      AHelperFunctions.showSnackBar('Error during Google sign-in: $e');
+      AHelperFunctions.showSnackBar(
+          msg: 'Error: Check Internet Connection', color: AColors.error);
       return null;
     }
   }
@@ -60,7 +62,8 @@ class AuthHelper {
             user.displayName ?? '', user.photoURL ?? '', user.email ?? '');
       }
     } catch (e) {
-      AHelperFunctions.showSnackBar('Error fetching additional user data: $e');
+      AHelperFunctions.showSnackBar(
+          msg: 'Error fetching additional user data: $e');
     }
   }
 
@@ -101,7 +104,7 @@ class AuthHelper {
       // Remove user credentials and additional data from local storage
       clearUserFromLocalStorage();
     } catch (e) {
-      AHelperFunctions.showSnackBar('Error during sign-out: $e');
+      AHelperFunctions.showSnackBar(msg: 'Error during sign-out: $e');
     }
   }
 

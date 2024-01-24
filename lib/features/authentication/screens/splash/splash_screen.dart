@@ -19,11 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    Timer(const Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       ctrl.startAnimation();
     });
     Future.delayed(const Duration(seconds: 3), () {
-      ctrl.goToLogin();
+      ctrl.navToNext();
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     });
     super.initState();
