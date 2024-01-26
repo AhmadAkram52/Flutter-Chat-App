@@ -2,7 +2,6 @@ import 'package:a_chat/common/widgets/chat_user_card.dart';
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
-import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -38,35 +37,17 @@ class HomeScreen extends StatelessWidget {
                 Map<String, String?> userData = sn.data as Map<String, String?>;
                 return Column(
                   children: [
-                    AChatUserCard(
-                      name: 'Ahmad Akram',
-                      lastMsg: "I Love You!",
-                      lastMsgTime: '11:13',
-                      image: '${userData['profile']}',
-                    ),
-                    SizedBox(
-                      height: 200,
-                      width: 200,
-                      child: Card(
-                        child: FutureBuilder(
-                          future: AHelperFunctions.loadImage(
-                              imageUrl: '${userData['profile']}'),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                  child: Text('Error: ${snapshot.error}'));
-                            } else {
-                              return Image.network('${userData['profile']}');
-                            }
-                          },
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: 10,
+                        itemBuilder: (context, i) => AChatUserCard(
+                          name: 'Ahmad Akram',
+                          lastMsg: "I Love You!",
+                          lastMsgTime: '11:13',
+                          image: '${userData['profile']}',
                         ),
                       ),
                     ),
-                    Text('${userData['email']}'),
-                    Text('${userData['name']}'),
                   ],
                 );
               } else {
@@ -76,9 +57,13 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add_comment_rounded),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(
+            right: ASizes.md, bottom: ASizes.defaultSpace),
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add_comment_rounded),
+        ),
       ),
     );
   }

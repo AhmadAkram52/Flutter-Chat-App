@@ -17,23 +17,29 @@ class AChatUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: FutureBuilder(
-          future: AHelperFunctions.loadImage(imageUrl: image),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return const CircleAvatar(child: Icon(Iconsax.user));
-            } else {
-              return CircleAvatar(backgroundImage: NetworkImage(image));
-            }
-          },
+    return InkWell(
+      onTap: () {},
+      child: Card(
+        child: ListTile(
+          leading: FutureBuilder(
+            future: AHelperFunctions.loadImage(imageUrl: image),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return const CircleAvatar(child: Icon(Iconsax.user));
+              } else {
+                return CircleAvatar(backgroundImage: NetworkImage(image));
+              }
+            },
+          ),
+          title: Text(name),
+          subtitle: Text(
+            lastMsg,
+            maxLines: 1,
+          ),
+          trailing: Text(lastMsgTime, maxLines: 1),
         ),
-        title: Text(name),
-        subtitle: Text(lastMsg),
-        trailing: Text(lastMsgTime),
       ),
     );
   }
