@@ -1,3 +1,4 @@
+import 'package:a_chat/util/apis/firebase_instances.dart';
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:a_chat/util/local%20storage/preferences_utility.dart';
@@ -5,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthHelper {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = Apis.auth;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   static const String _userKey = 'user';
 

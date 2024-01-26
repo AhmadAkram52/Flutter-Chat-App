@@ -39,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
                         itemCount: 10,
                         itemBuilder: (context, i) => AChatUserCard(
                           name: 'Ahmad Akram',
