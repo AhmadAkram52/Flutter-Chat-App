@@ -1,5 +1,8 @@
+import 'package:a_chat/common/widgets/chat_user_card.dart';
 import 'package:a_chat/util/constants/colors.dart';
+import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
+import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -25,36 +28,52 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.more_vert)),
         ],
       ),
-      body: Center(
-        child: FutureBuilder(
-          future: AuthHelper().getAdditionalUserDataFromLocalStorage(),
-          builder: (context, sn) {
-            if (sn.hasData) {
-              Map<String, String?> userData = sn.data as Map<String, String?>;
-              return Column(
-                children: [
-                  Image.network(
-                    '${userData['profile']}',
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
+      body: Padding(
+        padding: const EdgeInsets.all(ASizes.sm),
+        child: Center(
+          child: FutureBuilder(
+            future: AuthHelper().getAdditionalUserDataFromLocalStorage(),
+            builder: (context, sn) {
+              if (sn.hasData) {
+                Map<String, String?> userData = sn.data as Map<String, String?>;
+                return Column(
+                  children: [
+                    AChatUserCard(
+                      name: 'Ahmad Akram',
+                      lastMsg: "I Love You!",
+                      lastMsgTime: '11:13',
+                      image: '${userData['profile']}',
+                    ),
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: Card(
+                        child: FutureBuilder(
+                          future: AHelperFunctions.loadImage(
+                              imageUrl: '${userData['profile']}'),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error: ${snapshot.error}'));
+                            } else {
+                              return Image.network('${userData['profile']}');
+                            }
+                          },
                         ),
-                      );
-                    },
-                  ),
-                  Text('${userData['email']}'),
-                  Text('${userData['name']}'),
-                ],
-              );
-            } else {
-              return const Text("Ahmad");
-            }
-          },
+                      ),
+                    ),
+                    Text('${userData['email']}'),
+                    Text('${userData['name']}'),
+                  ],
+                );
+              } else {
+                return const Text("Ahmad");
+              }
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

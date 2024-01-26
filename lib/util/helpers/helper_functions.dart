@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AHelperFunctions {
   static Color? getColor(String value) {
@@ -124,5 +129,29 @@ class AHelperFunctions {
       wrappedList.add(Row(children: rowChildren));
     }
     return wrappedList;
+  }
+
+  static Future<Image> loadImage({required String imageUrl}) async {
+    final Completer<Image> completer = Completer();
+    final Image image = Image.network(imageUrl);
+
+    image.image.resolve(const ImageConfiguration()).addListener(
+          ImageStreamListener(
+            (info, synchronousCall) => completer.complete(image),
+            onError: (error, stackTrace) =>
+                completer.completeError('Network Error'),
+          ),
+        );
+    return completer.future;
+  }
+
+  static Future<String> downloadImageGetFilePath(
+      {required String imageUrl}) async {
+    http.Response response = await http.get(Uri.parse(imageUrl));
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final String filePath = '${appDocDir.path}/downloaded_image.jpg';
+    File file = File(filePath);
+    await file.writeAsBytes(response.bodyBytes);
+    return filePath;
   }
 }
