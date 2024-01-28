@@ -3,6 +3,7 @@ import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 class AChatUserCard extends StatelessWidget {
   final ChatUserModel user;
@@ -13,6 +14,10 @@ class AChatUserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final String name =
         StringUtils.capitalize(user.name.toString(), allWords: true);
+
+    DateTime time =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(user.createdAt));
+    var timeAc = DateFormat("Hm").format(time);
     return InkWell(
       onTap: () {},
       child: Card(
@@ -34,7 +39,7 @@ class AChatUserCard extends StatelessWidget {
             user.email,
             maxLines: 1,
           ),
-          trailing: Text(user.lastActive, maxLines: 1),
+          trailing: Text(timeAc, maxLines: 1),
         ),
       ),
     );
