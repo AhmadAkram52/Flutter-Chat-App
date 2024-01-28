@@ -1,4 +1,5 @@
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
+import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,15 @@ class AChatUserCard extends StatelessWidget {
             user.email,
             maxLines: 1,
           ),
-          trailing: Text(timeAc, maxLines: 1),
+          trailing: user.isOnline
+              ? Container(
+                  height: 10,
+                  width: 10,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: AColors.success),
+                )
+              : Text(timeAc, maxLines: 1),
         ),
       ),
     );
