@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:a_chat/util/constants/colors.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AHelperFunctions {
+  /// Get color based on the provided value
   static Color? getColor(String value) {
     /// Define your product specific colors here and it will match the attribute colors and show specific 🟠🟡🟢🔵🟣🟤
     if (value == 'Green') {
@@ -42,6 +44,7 @@ class AHelperFunctions {
     }
   }
 
+  /// Show a SnackBar with the given message and optional color
   static void showSnackBar({required String msg, Color? color}) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
       SnackBar(
@@ -52,6 +55,7 @@ class AHelperFunctions {
     );
   }
 
+  /// Show an alert dialog with the provided title and message
   static void showAlert(String title, String message) {
     showDialog(
       context: Get.context!,
@@ -70,6 +74,7 @@ class AHelperFunctions {
     );
   }
 
+  /// Show a centered circular progress indicator
   static void showProgressBar() {
     showDialog(
       context: Get.context!,
@@ -81,6 +86,7 @@ class AHelperFunctions {
     );
   }
 
+  /// Navigate to a new screen with the provided widget
   static void navigateToScreen(BuildContext context, Widget screen) {
     Navigator.push(
       context,
@@ -88,6 +94,7 @@ class AHelperFunctions {
     );
   }
 
+  /// Truncate text to a specified maximum length
   static String truncateText(String text, int maxLength) {
     if (text.length <= maxLength) {
       return text;
@@ -96,31 +103,43 @@ class AHelperFunctions {
     }
   }
 
+  /// Check if the app is in dark mode
   static bool isDarkMode(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
   }
 
+  /// Get the screen size
   static Size screenSize() {
     return MediaQuery.of(Get.context!).size;
   }
 
+  /// Get the screen height
   static double screenHeight() {
     return MediaQuery.of(Get.context!).size.height;
   }
 
+  /// Get the screen width
   static double screenWidth() {
     return MediaQuery.of(Get.context!).size.width;
   }
 
-  static String getFormattedDate(DateTime date,
+  /// Format DateTime to a string with the specified format
+  static String getFormatDateTime(DateTime dateTime,
       {String format = 'dd MMM yyyy'}) {
-    return DateFormat(format).format(date);
+    return DateFormat(format).format(dateTime);
   }
 
+  /// Capitalize the first letter of each word in a string
+  static String capitalize(String text, {bool all = true}) {
+    return StringUtils.capitalize(text, allWords: all);
+  }
+
+  /// Remove duplicates from a list
   static List<T> removeDuplicates<T>(List<T> list) {
     return list.toSet().toList();
   }
 
+  /// Wrap a list of widgets into rows with a specified row size
   static List<Widget> wrapWidgets(List<Widget> widgets, int rowSize) {
     final wrappedList = <Widget>[];
     for (var i = 0; i < widgets.length; i += rowSize) {
@@ -131,6 +150,7 @@ class AHelperFunctions {
     return wrappedList;
   }
 
+  /// Load an image from the provided URL asynchronously
   static Future<Image> loadImage({required String imageUrl}) async {
     final Completer<Image> completer = Completer();
     final Image image = Image.network(imageUrl);
@@ -145,6 +165,7 @@ class AHelperFunctions {
     return completer.future;
   }
 
+  /// Download an image from the provided URL and get its file path
   static Future<String> downloadImageGetFilePath(
       {required String imageUrl}) async {
     http.Response response = await http.get(Uri.parse(imageUrl));

@@ -1,10 +1,8 @@
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
-import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
 
 class AChatUserCard extends StatelessWidget {
   final ChatUserModel user;
@@ -13,12 +11,8 @@ class AChatUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String name =
-        StringUtils.capitalize(user.name.toString(), allWords: true);
-
-    DateTime time =
+    DateTime dateTime =
         DateTime.fromMillisecondsSinceEpoch(int.parse(user.createdAt));
-    var timeAc = DateFormat("Hm").format(time);
     return InkWell(
       onTap: () {},
       child: Card(
@@ -35,7 +29,7 @@ class AChatUserCard extends StatelessWidget {
               }
             },
           ),
-          title: Text(name),
+          title: Text(AHelperFunctions.capitalize(user.name)),
           subtitle: Text(
             user.email,
             maxLines: 1,
@@ -48,7 +42,8 @@ class AChatUserCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                       color: AColors.success),
                 )
-              : Text(timeAc, maxLines: 1),
+              : Text(AHelperFunctions.getFormatDateTime(dateTime, format: 'Hm'),
+                  maxLines: 1),
         ),
       ),
     );
