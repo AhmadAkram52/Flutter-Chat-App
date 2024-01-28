@@ -4,6 +4,7 @@ import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/constants/texts.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
+import 'package:a_chat/util/helpers/user_helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,12 +58,18 @@ class _LoginScreenState extends State<LoginScreen> {
             child: ElevatedButton.icon(
               onPressed: () {
                 AHelperFunctions.showProgressBar();
-                AuthHelper().signInWithGoogle().then((user) {
+                AuthHelper().signInWithGoogle().then((user) async {
                   Navigator.pop(context);
                   if (user != null) {
-                    // log(user?.uid as num);
-                    AHelperFunctions.showSnackBar(msg: 'SignIn Success');
-                    Get.offAllNamed('/home');
+                    if (await AUserHelperFunctions.userExist()) {
+                      AHelperFunctions.showSnackBar(msg: 'SignIn Success');
+                      Get.offAllNamed('/home');
+                    } else {
+                      await AUserHelperFunctions.createUser().then((value) {
+                        AHelperFunctions.showSnackBar(msg: 'SignIn Success');
+                        Get.offAllNamed('/home');
+                      });
+                    }
                   }
                 });
               },
