@@ -1,34 +1,25 @@
 import 'package:a_chat/common/widgets/chat_user_card.dart';
+import 'package:a_chat/features/chat/models/chat_user_model.dart';
+import 'package:a_chat/features/chat/screens/widgets/home_app_bar.dart';
+import 'package:a_chat/features/chat/screens/widgets/home_floating_button.dart';
 import 'package:a_chat/util/apis/firebase_instances.dart';
-import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
-import 'package:basic_utils/basic_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
+    List<ChatUserModel> userList = [];
     return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(CupertinoIcons.home),
-        title: const Text('A Chat'),
-        backgroundColor: AColors.primary,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(
-              onPressed: () {
-                AuthHelper()
-                    .signOut()
-                    .then((value) => Get.offAllNamed('/login'));
-              },
-              icon: const Icon(Icons.more_vert)),
-        ],
-      ),
+      appBar: const AHomeAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(ASizes.sm),
         child: Center(
@@ -36,50 +27,54 @@ class HomeScreen extends StatelessWidget {
             future: AuthHelper().getAdditionalUserDataFromLocalStorage(),
             builder: (context, sn) {
               if (sn.hasData) {
-                Map<String, String?> userData = sn.data as Map<String, String?>;
                 return Column(
                   children: [
                     Expanded(
                       child: StreamBuilder(
                         stream: Apis.fireStore.collection('users').snapshots(),
                         builder: (context, sn) {
-                          final data = sn.data!.docs;
-
-                          return ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: data.length,
-                            itemBuilder: (context, i) {
-                              final String name = StringUtils.capitalize(
-                                  data[i].data()['name'].toString(),
-                                  allWords: true);
-                              return AChatUserCard(
-                                name: name,
-                                lastMsg: "I Love You!",
-                                lastMsgTime: '11:13',
-                                image: '${userData['profile']}',
+                          switch (sn.connectionState) {
+                            case ConnectionState.waiting:
+                            case ConnectionState.none:
+                              return const Center(
+                                child: CircularProgressIndicator(),
                               );
-                            },
-                          );
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              final data = sn.data!.docs;
+                              userList = data
+                                      .map((e) =>
+                                          ChatUserModel.fromJson(e.data()))
+                                      .toList() ??
+                                  [];
+                              if (userList.isNotEmpty) {
+                                return ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: userList.length,
+                                  itemBuilder: (context, i) {
+                                    return AChatUserCard(
+                                      user: userList[i],
+                                    );
+                                  },
+                                );
+                              } else {
+                                return const Center(
+                                    child: Text("No Connection Found"));
+                              }
+                          }
                         },
                       ),
                     ),
                   ],
                 );
               } else {
-                return const Text("Ahmad");
+                return const Text("No Content");
               }
             },
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(
-            right: ASizes.md, bottom: ASizes.defaultSpace),
-        child: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add_comment_rounded),
-        ),
-      ),
+      floatingActionButton: const HomeFloatingButton(),
     );
   }
 }
