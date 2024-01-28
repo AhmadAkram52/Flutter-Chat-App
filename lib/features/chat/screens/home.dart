@@ -1,7 +1,9 @@
 import 'package:a_chat/common/widgets/chat_user_card.dart';
+import 'package:a_chat/util/apis/firebase_instances.dart';
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -38,15 +40,27 @@ class HomeScreen extends StatelessWidget {
                 return Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: 10,
-                        itemBuilder: (context, i) => AChatUserCard(
-                          name: 'Ahmad Akram',
-                          lastMsg: "I Love You!",
-                          lastMsgTime: '11:13',
-                          image: '${userData['profile']}',
-                        ),
+                      child: StreamBuilder(
+                        stream: Apis.fireStore.collection('users').snapshots(),
+                        builder: (context, sn) {
+                          final data = sn.data!.docs;
+
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: data.length,
+                            itemBuilder: (context, i) {
+                              final String name = StringUtils.capitalize(
+                                  data[i].data()['name'].toString(),
+                                  allWords: true);
+                              return AChatUserCard(
+                                name: name,
+                                lastMsg: "I Love You!",
+                                lastMsgTime: '11:13',
+                                image: '${userData['profile']}',
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
