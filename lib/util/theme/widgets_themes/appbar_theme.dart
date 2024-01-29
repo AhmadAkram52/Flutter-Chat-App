@@ -2,8 +2,8 @@ import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
-class AAppBar {
-  AAppBar._();
+class AAppBarTheme {
+  AAppBarTheme._();
 
   /// Light AppBar
   static const AppBarTheme lightAppBar = AppBarTheme(

@@ -1,4 +1,4 @@
-import 'package:a_chat/util/constants/colors.dart';
+import 'package:a_chat/common/widgets/bar/app_bar.dart';
 import 'package:a_chat/util/device/device_utility.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,11 +12,10 @@ class AHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
+    return AAppBar(
       leading: const Icon(CupertinoIcons.home),
       title: const Text('A Chat'),
-      backgroundColor: AColors.primary,
-      actions: [
+      action: [
         IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
         IconButton(
             onPressed: () {
