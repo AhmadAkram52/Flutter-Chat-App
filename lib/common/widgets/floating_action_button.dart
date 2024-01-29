@@ -1,9 +1,14 @@
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
-class HomeFloatingButton extends StatelessWidget {
-  const HomeFloatingButton({
+class AFloatingActionButton extends StatelessWidget {
+  final Widget child;
+  final Color? bgColor;
+
+  const AFloatingActionButton({
     super.key,
+    required this.child,
+    this.bgColor,
   });
 
   @override
@@ -13,7 +18,8 @@ class HomeFloatingButton extends StatelessWidget {
           const EdgeInsets.only(right: ASizes.md, bottom: ASizes.defaultSpace),
       child: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add_comment_rounded),
+        backgroundColor: bgColor,
+        child: child,
       ),
     );
   }
