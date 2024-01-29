@@ -40,7 +40,7 @@ class AuthHelper {
       return user;
     } catch (e) {
       AHelperFunctions.showSnackBar(
-          msg: 'Error: Check Internet Connection', color: AColors.error);
+          msg: 'Error: Check Internet Connection', bgColor: AColors.error);
       return null;
     }
   }

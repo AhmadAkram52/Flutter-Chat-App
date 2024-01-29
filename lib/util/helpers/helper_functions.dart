@@ -45,11 +45,11 @@ class AHelperFunctions {
   }
 
   /// Show a SnackBar with the given message and optional color
-  static void showSnackBar({required String msg, Color? color}) {
+  static void showSnackBar({required String msg, Color? bgColor}) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
       SnackBar(
         content: Text(msg),
-        backgroundColor: color ?? AColors.info,
+        backgroundColor: bgColor ?? AColors.info,
         behavior: SnackBarBehavior.floating,
       ),
     );

@@ -22,7 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(ASizes.sm),
         child: StreamBuilder(
-          stream: Apis.fireStore.collection('users').snapshots(),
+          stream: Apis.fireStore
+              .collection('users')
+              .orderBy('last_active', descending: true)
+              .snapshots(),
           builder: (context, sn) {
             switch (sn.connectionState) {
               case ConnectionState.waiting:
