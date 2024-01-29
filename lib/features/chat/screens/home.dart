@@ -1,7 +1,7 @@
 import 'package:a_chat/common/widgets/chat_user_card.dart';
 import 'package:a_chat/common/widgets/floating_action_button.dart';
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
-import 'package:a_chat/features/chat/screens/widgets/home_app_bar.dart';
+import 'package:a_chat/features/chat/screens/widgets/home_widgets/home_app_bar.dart';
 import 'package:a_chat/util/apis/firebase_instances.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     List<ChatUserModel> userList = [];
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const AHomeAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(ASizes.sm),
@@ -57,8 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      floatingActionButton: const AFloatingActionButton(
-        child: Icon(Icons.add_comment_rounded),
+      floatingActionButton: AFloatingActionButton(
+        onPress: () {},
+        child: const Icon(Icons.add_comment_rounded),
       ),
     );
   }

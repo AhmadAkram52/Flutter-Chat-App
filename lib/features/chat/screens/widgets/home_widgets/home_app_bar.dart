@@ -1,6 +1,5 @@
 import 'package:a_chat/common/widgets/bar/app_bar.dart';
 import 'package:a_chat/util/device/device_utility.dart';
-import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,9 +18,9 @@ class AHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
         IconButton(
             onPressed: () {
-              AuthHelper().signOut().then((value) => Get.offAllNamed('/login'));
+              Get.toNamed('/profile');
             },
-            icon: const Icon(Icons.more_vert)),
+            icon: const Icon(Icons.more_vert_outlined)),
       ],
     );
   }

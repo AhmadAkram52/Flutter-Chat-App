@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class AFloatingActionButton extends StatelessWidget {
   final Widget child;
   final Color? bgColor;
+  final VoidCallback onPress;
 
   const AFloatingActionButton({
     super.key,
     required this.child,
     this.bgColor,
+    required this.onPress,
   });
 
   @override
@@ -17,7 +19,8 @@ class AFloatingActionButton extends StatelessWidget {
       padding:
           const EdgeInsets.only(right: ASizes.md, bottom: ASizes.defaultSpace),
       child: FloatingActionButton(
-        onPressed: () {},
+        elevation: 20,
+        onPressed: onPress,
         backgroundColor: bgColor,
         child: child,
       ),

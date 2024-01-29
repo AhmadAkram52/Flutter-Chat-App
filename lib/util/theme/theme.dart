@@ -1,6 +1,7 @@
 import 'package:a_chat/util/theme/widgets_themes/appbar_theme.dart';
 import 'package:a_chat/util/theme/widgets_themes/elevated_button_theme.dart';
 import 'package:a_chat/util/theme/widgets_themes/floating_action_button_theme.dart';
+import 'package:a_chat/util/theme/widgets_themes/text_field_theme.dart';
 import 'package:a_chat/util/theme/widgets_themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class ATheme {
     floatingActionButtonTheme: AFloatingActionButtonTheme.lightFloatingBtn,
     textTheme: ATextTheme.lightTextTheme,
     elevatedButtonTheme: AElevatedBtnTheme.lightElevatedButton,
+    inputDecorationTheme: ATextFieldTheme.lightTextFieldTheme,
   );
 
   /// Dark Theme
@@ -25,5 +27,6 @@ class ATheme {
     floatingActionButtonTheme: AFloatingActionButtonTheme.darkFloatingBtn,
     textTheme: ATextTheme.darkTextTheme,
     elevatedButtonTheme: AElevatedBtnTheme.lightElevatedButton,
+    inputDecorationTheme: ATextFieldTheme.darkTextFieldTheme,
   );
 }

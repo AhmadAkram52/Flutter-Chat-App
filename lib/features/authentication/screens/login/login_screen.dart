@@ -1,3 +1,4 @@
+import 'package:a_chat/common/widgets/elevated_button_with_Icon.dart';
 import 'package:a_chat/features/authentication/controllers/login/login_controller.dart';
 import 'package:a_chat/util/constants/image_strings.dart';
 import 'package:a_chat/util/constants/sizes.dart';
@@ -51,41 +52,34 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }),
           Positioned(
-            bottom: AHelperFunctions.screenHeight() * .2,
-            left: AHelperFunctions.screenWidth() * .1,
-            width: AHelperFunctions.screenWidth() * .8,
-            height: AHelperFunctions.screenWidth() * .15,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                AHelperFunctions.showProgressBar();
-                AuthHelper().signInWithGoogle().then((user) async {
-                  Navigator.pop(context);
-                  if (user != null) {
-                    if (await AUserHelperFunctions.userExist()) {
-                      AHelperFunctions.showSnackBar(msg: 'SignIn Success');
-                      Get.offAllNamed('/home');
-                    } else {
-                      await AUserHelperFunctions.createUser().then((value) {
+              bottom: AHelperFunctions.screenHeight() * .2,
+              left: AHelperFunctions.screenWidth() * .1,
+              width: AHelperFunctions.screenWidth() * .8,
+              height: AHelperFunctions.screenWidth() * .15,
+              child: AElevatedButtonWithIcon(
+                text: ATexts.signInWithGoogle,
+                icon: Image.asset(
+                  AImages.googleLogo,
+                  height: ASizes.iconXl * 1.3,
+                ),
+                onPress: () {
+                  AHelperFunctions.showProgressBar();
+                  AuthHelper().signInWithGoogle().then((user) async {
+                    Navigator.pop(context);
+                    if (user != null) {
+                      if (await AUserHelperFunctions.userExist()) {
                         AHelperFunctions.showSnackBar(msg: 'SignIn Success');
                         Get.offAllNamed('/home');
-                      });
+                      } else {
+                        await AUserHelperFunctions.createUser().then((value) {
+                          AHelperFunctions.showSnackBar(msg: 'SignIn Success');
+                          Get.offAllNamed('/home');
+                        });
+                      }
                     }
-                  }
-                });
-              },
-              icon: Image.asset(
-                AImages.googleLogo,
-                height: ASizes.iconXl * 1.3,
-              ),
-              label: Text(
-                ATexts.signInWithGoogle,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .apply(color: Colors.white),
-              ),
-            ),
-          ),
+                  });
+                },
+              )),
         ],
       ),
     );
