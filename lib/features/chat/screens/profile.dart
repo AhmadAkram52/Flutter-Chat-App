@@ -1,13 +1,12 @@
 import 'package:a_chat/common/widgets/bar/app_bar.dart';
 import 'package:a_chat/common/widgets/elevated_button_with_Icon.dart';
 import 'package:a_chat/util/apis/firebase_instances.dart';
-import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
-import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
+
+import 'widgets/profile_widgets/profile_image.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -28,61 +27,7 @@ class ProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ///Profile Image
-                SizedBox(
-                  height: AHelperFunctions.screenWidth() * .5,
-                  width: AHelperFunctions.screenWidth() * .5,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        child: SizedBox(
-                          width: AHelperFunctions.screenWidth() * .5,
-                          // color: AColors.primary,
-                          child: FutureBuilder(
-                            future: AHelperFunctions.loadImage(
-                                imageUrl:
-                                    'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600'),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              } else if (snapshot.hasError) {
-                                return CircleAvatar(
-                                    radius: AHelperFunctions.screenWidth() * .5,
-                                    backgroundColor: AColors.buttonPrimary,
-                                    child: Expanded(
-                                      child: Icon(Iconsax.user,
-                                          color: Colors.white,
-                                          size: AHelperFunctions.screenWidth() *
-                                              .4),
-                                    ));
-                              } else {
-                                return CircleAvatar(
-                                  radius: AHelperFunctions.screenWidth() * .5,
-                                  backgroundImage: const NetworkImage(
-                                      'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600'),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 5,
-                        bottom: 5,
-                        child: IconButton(
-                          onPressed: () {},
-                          color: Colors.black,
-                          style: IconButton.styleFrom(
-                              shadowColor: Colors.black,
-                              elevation: 3,
-                              backgroundColor: Colors.white),
-                          icon: const Icon(Icons.edit),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                const ProfileImage(),
                 const SizedBox(height: ASizes.spaceBtwItems),
 
                 /// Email
@@ -91,31 +36,51 @@ class ProfileScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: ASizes.spaceBtwSections),
+
+                /// Name Field
                 TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Name',
-                    labelStyle: TextStyle(color: Colors.black),
                     prefixIcon: Icon(Icons.person),
                   ),
                 ),
                 const SizedBox(height: ASizes.spaceBtwItems),
+
+                /// About Field
                 TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'About',
                     prefixIcon: Icon(Icons.error),
                   ),
                 ),
+                const SizedBox(height: ASizes.spaceBtwSections * 1.5),
+
+                /// Update Button
+                AElevatedButtonWithIcon(
+                  horizontalPadding: ASizes.spaceBtwSections * 2,
+                  text: 'Update',
+                  icon: const Icon(
+                    Icons.login,
+                    size: ASizes.iconXl,
+                    color: Colors.white,
+                  ),
+                  onPress: () {},
+                )
               ],
             ),
           ),
         ),
       ),
+
+      /// LogOut Button
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(
             right: ASizes.md, bottom: ASizes.defaultSpace),
         child: AElevatedButtonWithIcon(
+          horizontalPadding: ASizes.spaceBtwItems,
+          verticalPadding: 5,
           icon: const Icon(
-            Icons.login_outlined,
+            Icons.logout,
             color: Colors.white,
             size: ASizes.iconXl,
           ),

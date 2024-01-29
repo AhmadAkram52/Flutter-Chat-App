@@ -1,4 +1,3 @@
-import 'package:a_chat/util/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class AElevatedButtonWithIcon extends StatelessWidget {
@@ -6,6 +5,8 @@ class AElevatedButtonWithIcon extends StatelessWidget {
   final String text;
   final Color? bgColor;
   final VoidCallback onPress;
+  final double horizontalPadding;
+  final double verticalPadding;
 
   const AElevatedButtonWithIcon({
     super.key,
@@ -13,6 +14,8 @@ class AElevatedButtonWithIcon extends StatelessWidget {
     this.bgColor,
     required this.icon,
     required this.onPress,
+    this.horizontalPadding = 10,
+    this.verticalPadding = 10,
   });
 
   @override
@@ -30,8 +33,8 @@ class AElevatedButtonWithIcon extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 20,
         backgroundColor: bgColor,
-        padding: const EdgeInsets.symmetric(
-            vertical: ASizes.md / 1.5, horizontal: ASizes.defaultSpace / 2),
+        padding: EdgeInsets.symmetric(
+            vertical: verticalPadding, horizontal: horizontalPadding),
       ),
     );
   }
