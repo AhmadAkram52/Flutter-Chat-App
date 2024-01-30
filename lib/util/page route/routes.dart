@@ -1,7 +1,7 @@
 import 'package:a_chat/features/authentication/screens/login/login_screen.dart';
 import 'package:a_chat/features/authentication/screens/splash/splash_screen.dart';
-import 'package:a_chat/features/chat/screens/home/home.dart';
-import 'package:a_chat/features/chat/screens/profile/profile.dart';
+import 'package:a_chat/features/chat/screens/home/home_screen.dart';
+import 'package:a_chat/features/chat/screens/profile/profile_screen.dart';
 import 'package:get/get.dart';
 
 class Routes {

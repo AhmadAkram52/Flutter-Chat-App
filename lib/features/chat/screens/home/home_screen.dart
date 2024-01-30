@@ -2,8 +2,8 @@ import 'package:a_chat/common/widgets/chat_user_card.dart';
 import 'package:a_chat/common/widgets/floating_action_button.dart';
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/features/chat/screens/home/widgets/home_app_bar.dart';
-import 'package:a_chat/util/apis/firebase_instances.dart';
 import 'package:a_chat/util/constants/sizes.dart';
+import 'package:a_chat/util/helpers/user_helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,10 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(ASizes.sm),
         child: StreamBuilder(
-          stream: Apis.fireStore
-              .collection('users')
-              .orderBy('last_active', descending: true)
-              .snapshots(),
+          stream: AUserHelperFunctions.getUsers(),
           builder: (context, sn) {
             switch (sn.connectionState) {
               case ConnectionState.waiting:

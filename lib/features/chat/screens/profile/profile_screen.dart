@@ -1,11 +1,10 @@
 import 'package:a_chat/common/widgets/bar/app_bar.dart';
 import 'package:a_chat/common/widgets/elevated_button_with_Icon.dart';
 import 'package:a_chat/features/chat/controllers/profile/profile_controller.dart';
+import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/features/chat/screens/profile/widgets/profile_image.dart';
-import 'package:a_chat/util/apis/firebase_instances.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/constants/texts.dart';
-import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:a_chat/util/helpers/user_helper_functions.dart';
 import 'package:a_chat/util/local%20storage/chat_user_preferences.dart';
 import 'package:flutter/material.dart';
@@ -19,20 +18,13 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final ProfileController ctrl = Get.put(ProfileController());
-
-  // late final String about;
+  final ProfileController logoutCtrl = Get.put(ProfileController());
+  final ChatUserModel user = AChatUserPreferences.getChatUser();
 
   @override
   void initState() {
-    Apis.fireStore
-        .collection('users')
-        .doc(AUserHelperFunctions.user.uid)
-        .get()
-        .then((doc) {
-      final data = doc.data() as Map<String, dynamic>;
-      ctrl.aboutController.text = data['about'];
-    });
+    logoutCtrl.nameController.text = user.name;
+    logoutCtrl.aboutController.text = user.about;
     super.initState();
   }
 
@@ -50,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: [
                 ///Profile Image
-                const ProfileImage(),
+                ProfileImage(user: user),
                 const SizedBox(height: ASizes.spaceBtwItems),
 
                 /// Email
@@ -60,8 +52,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 /// Name Field
                 TextFormField(
-                  initialValue: AUserHelperFunctions.user.displayName,
-                  // controller: ctrl.nameController,
+                  // initialValue: user.name,
+                  controller: logoutCtrl.nameController,
                   decoration: const InputDecoration(
                     labelText: ATexts.name,
                     hintText: ATexts.nameHint,
@@ -72,8 +64,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 /// About Field
                 TextFormField(
-                  // initialValue: about,
-                  controller: ctrl.aboutController,
+                  // initialValue: user.about,
+                  controller: logoutCtrl.aboutController,
+                  maxLines: 5,
+                  minLines: 1,
                   decoration: const InputDecoration(
                     labelText: ATexts.about,
                     hintText: ATexts.aboutHint,
@@ -91,7 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     size: ASizes.iconXl,
                     color: Colors.white,
                   ),
-                  onPress: () {},
+                  onPress: () =>
+                      logoutCtrl.updateUserData(context: context, user: user),
                 )
               ],
             ),
@@ -113,10 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           text: ATexts.logout,
           bgColor: Colors.red,
-          onPress: () {
-            AChatUserPreferences.removeCurrentUser();
-            AuthHelper().signOut().then((value) => Get.offAllNamed('/login'));
-          },
+          onPress: () => logoutCtrl.logout(context),
         ),
       ),
     );

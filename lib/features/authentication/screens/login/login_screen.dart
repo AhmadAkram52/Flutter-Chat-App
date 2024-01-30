@@ -3,9 +3,7 @@ import 'package:a_chat/features/authentication/controllers/login/login_controlle
 import 'package:a_chat/util/constants/image_strings.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/constants/texts.dart';
-import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
-import 'package:a_chat/util/helpers/user_helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,12 +15,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final LoginController controller = Get.put(LoginController());
+  final LoginController loginCtrl = Get.put(LoginController());
 
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 500), () {
-      controller.statAnimation();
+      loginCtrl.statAnimation();
     });
     super.initState();
   }
@@ -43,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Obx(() {
             return AnimatedPositioned(
               top: AHelperFunctions.screenHeight() * .15,
-              right: controller.isAnimation.value
+              right: loginCtrl.isAnimation.value
                   ? AHelperFunctions.screenWidth() * .25
                   : -AHelperFunctions.screenWidth() * .5,
               width: AHelperFunctions.screenWidth() * .5,
@@ -62,23 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   AImages.googleLogo,
                   height: ASizes.iconXl * 1.3,
                 ),
-                onPress: () {
-                  AHelperFunctions.showProgressBar();
-                  AuthHelper().signInWithGoogle().then((user) async {
-                    Navigator.pop(context);
-                    if (user != null) {
-                      if (await AUserHelperFunctions.userExist()) {
-                        AHelperFunctions.showSnackBar(msg: 'SignIn Success');
-                        Get.offAllNamed('/home');
-                      } else {
-                        await AUserHelperFunctions.createUser().then((value) {
-                          AHelperFunctions.showSnackBar(msg: 'SignIn Success');
-                          Get.offAllNamed('/home');
-                        });
-                      }
-                    }
-                  });
-                },
+                onPress: () => loginCtrl.login(context),
               )),
         ],
       ),

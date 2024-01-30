@@ -15,15 +15,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final SplashController ctrl = Get.put(SplashController());
+  final SplashController splashCtrl = Get.put(SplashController());
 
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 100), () {
-      ctrl.startAnimation();
+      splashCtrl.startAnimation();
     });
     Future.delayed(const Duration(seconds: 3), () {
-      ctrl.navToNext();
+      splashCtrl.navToNext();
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     });
     super.initState();
@@ -36,10 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           AnimatedPositioned(
             top: AHelperFunctions.screenHeight() * .2,
-            left: ctrl.startAnimate.value
+            left: splashCtrl.startAnimate.value
                 ? AHelperFunctions.screenWidth() * .1
                 : AHelperFunctions.screenWidth() * .25,
-            width: ctrl.startAnimate.value
+            width: splashCtrl.startAnimate.value
                 ? AHelperFunctions.screenWidth() * .8
                 : AHelperFunctions.screenWidth() * .5,
             duration: const Duration(seconds: 2),

@@ -1,10 +1,14 @@
+import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class ProfileImage extends StatelessWidget {
+  final ChatUserModel user;
+
   const ProfileImage({
     super.key,
+    required this.user,
   });
 
   @override
@@ -19,9 +23,9 @@ class ProfileImage extends StatelessWidget {
               width: AHelperFunctions.screenWidth() * .5,
               // color: AColors.primary,
               child: FutureBuilder(
-                future: AHelperFunctions.loadImage(
-                    imageUrl:
-                        'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600'),
+                future: AHelperFunctions.loadImage(imageUrl: user.image
+                    // 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600',
+                    ),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -37,8 +41,10 @@ class ProfileImage extends StatelessWidget {
                   } else {
                     return CircleAvatar(
                       radius: AHelperFunctions.screenWidth() * .5,
-                      backgroundImage: const NetworkImage(
-                          'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600'),
+                      backgroundImage: NetworkImage(
+                        user.image,
+                        // 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600',
+                      ),
                     );
                   }
                 },

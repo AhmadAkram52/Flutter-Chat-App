@@ -75,9 +75,9 @@ class AHelperFunctions {
   }
 
   /// Show a centered circular progress indicator
-  static void showProgressBar() {
+  static void showProgressBar(BuildContext context) {
     showDialog(
-      context: Get.context!,
+      context: context,
       builder: (BuildContext context) {
         return const Center(
           child: CircularProgressIndicator(),
