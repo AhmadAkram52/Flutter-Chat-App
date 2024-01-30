@@ -4,9 +4,10 @@ import 'package:a_chat/features/chat/controllers/profile/profile_controller.dart
 import 'package:a_chat/features/chat/screens/profile/widgets/profile_image.dart';
 import 'package:a_chat/util/apis/firebase_instances.dart';
 import 'package:a_chat/util/constants/sizes.dart';
+import 'package:a_chat/util/constants/texts.dart';
 import 'package:a_chat/util/helpers/auth_helper_functions.dart';
 import 'package:a_chat/util/helpers/user_helper_functions.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:a_chat/util/local%20storage/chat_user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,16 +21,17 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final ProfileController ctrl = Get.put(ProfileController());
 
+  // late final String about;
+
   @override
-  initState() {
-    ctrl.nameController.text = AUserHelperFunctions.user.displayName!;
-    final dataRef = Apis.fireStore
+  void initState() {
+    Apis.fireStore
         .collection('users')
         .doc(AUserHelperFunctions.user.uid)
         .get()
-        .then((DocumentSnapshot value) {
-      final data = value.data() as Map<String, dynamic>;
-      ctrl.aboutController.text = data['about'].toString();
+        .then((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      ctrl.aboutController.text = data['about'];
     });
     super.initState();
   }
@@ -52,15 +54,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: ASizes.spaceBtwItems),
 
                 /// Email
-                Text(Apis.auth.currentUser!.email.toString(),
+                Text(AUserHelperFunctions.user.email.toString(),
                     style: Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(height: ASizes.spaceBtwSections),
 
                 /// Name Field
                 TextFormField(
-                  controller: ctrl.nameController,
+                  initialValue: AUserHelperFunctions.user.displayName,
+                  // controller: ctrl.nameController,
                   decoration: const InputDecoration(
-                    labelText: 'Name',
+                    labelText: ATexts.name,
+                    hintText: ATexts.nameHint,
                     prefixIcon: Icon(Icons.person),
                   ),
                 ),
@@ -68,10 +72,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 /// About Field
                 TextFormField(
+                  // initialValue: about,
                   controller: ctrl.aboutController,
                   decoration: const InputDecoration(
-                    labelText: 'About',
-                    prefixIcon: Icon(Icons.error),
+                    labelText: ATexts.about,
+                    hintText: ATexts.aboutHint,
+                    prefixIcon: Icon(Icons.info_outline),
                   ),
                 ),
                 const SizedBox(height: ASizes.spaceBtwSections * 1.5),
@@ -79,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 /// Update Button
                 AElevatedButtonWithIcon(
                   horizontalPadding: ASizes.spaceBtwSections * 2,
-                  text: 'Update',
+                  text: ATexts.update.toUpperCase(),
                   icon: const Icon(
                     Icons.login,
                     size: ASizes.iconXl,
@@ -105,9 +111,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: Colors.white,
             size: ASizes.iconXl,
           ),
-          text: 'LogOut',
+          text: ATexts.logout,
           bgColor: Colors.red,
           onPress: () {
+            AChatUserPreferences.removeCurrentUser();
             AuthHelper().signOut().then((value) => Get.offAllNamed('/login'));
           },
         ),

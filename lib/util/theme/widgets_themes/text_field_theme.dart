@@ -8,7 +8,7 @@ class ATextFieldTheme {
     labelStyle: const TextStyle(color: Colors.black),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
-      borderSide: const BorderSide(color: AColors.black),
+      borderSide: const BorderSide(color: AColors.buttonPrimary),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
@@ -22,7 +22,7 @@ class ATextFieldTheme {
     labelStyle: const TextStyle(color: Colors.white),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
-      borderSide: const BorderSide(color: AColors.white),
+      borderSide: const BorderSide(color: AColors.buttonPrimary),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),

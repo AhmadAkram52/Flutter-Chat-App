@@ -1,5 +1,6 @@
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/util/apis/firebase_instances.dart';
+import 'package:a_chat/util/local%20storage/chat_user_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AUserHelperFunctions {
@@ -23,6 +24,7 @@ class AUserHelperFunctions {
         lastActive: time,
         isOnline: false,
         pushToken: '');
+    AChatUserPreferences.saveChatUser(chatUser);
     return await Apis.fireStore
         .collection('users')
         .doc(user.uid)

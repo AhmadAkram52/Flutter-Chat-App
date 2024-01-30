@@ -53,7 +53,6 @@ class ASharedPreferences {
   }
 
   // Remove method
-
   static Future<void> remove(String key) async {
     await _preferences.remove(key);
   }
