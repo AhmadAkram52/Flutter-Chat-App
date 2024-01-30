@@ -44,7 +44,6 @@ class AUserHelperFunctions {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getUsers() {
     return Apis.fireStore
         .collection('users')
-        .orderBy('last_active', descending: true)
         .where(
           'id',
           isNotEqualTo: user.uid,

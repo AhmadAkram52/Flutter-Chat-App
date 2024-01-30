@@ -13,38 +13,36 @@ class AChatUserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime dateTime =
         DateTime.fromMillisecondsSinceEpoch(int.parse(user.createdAt));
-    return InkWell(
-      onTap: () {},
-      child: Card(
-        child: ListTile(
-          leading: FutureBuilder(
-            future: AHelperFunctions.loadImage(imageUrl: user.image),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return const CircleAvatar(child: Icon(Iconsax.user));
-              } else {
-                return CircleAvatar(backgroundImage: NetworkImage(user.image));
-              }
-            },
-          ),
-          title: Text(AHelperFunctions.capitalize(user.name)),
-          subtitle: Text(
-            user.email,
-            maxLines: 1,
-          ),
-          trailing: user.isOnline
-              ? Container(
-                  height: 10,
-                  width: 10,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: AColors.success),
-                )
-              : Text(AHelperFunctions.getFormatDateTime(dateTime, format: 'Hm'),
-                  maxLines: 1),
+    return Card(
+      child: ListTile(
+        onTap: () {},
+        leading: FutureBuilder(
+          future: AHelperFunctions.loadImage(imageUrl: user.image),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return const CircleAvatar(child: Icon(Iconsax.user));
+            } else {
+              return CircleAvatar(backgroundImage: NetworkImage(user.image));
+            }
+          },
         ),
+        title: Text(AHelperFunctions.capitalize(user.name)),
+        subtitle: Text(
+          user.email,
+          maxLines: 1,
+        ),
+        trailing: user.isOnline
+            ? Container(
+                height: 10,
+                width: 10,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: AColors.success),
+              )
+            : Text(AHelperFunctions.getFormatDateTime(dateTime, format: 'Hm'),
+                maxLines: 1),
       ),
     );
   }

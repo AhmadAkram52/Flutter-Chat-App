@@ -20,6 +20,7 @@ class ProfileController extends GetxController {
     });
   }
 
+  /// Update User Function
   Future<void> updateUserData(
       {required BuildContext context, required ChatUserModel user}) async {
     AHelperFunctions.showProgressBar(context);
