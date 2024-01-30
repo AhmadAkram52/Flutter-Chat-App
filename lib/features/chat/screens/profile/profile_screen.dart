@@ -30,70 +30,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const AAppBar(
         title: Text('Profile Screen'),
       ),
-      body: GestureDetector(
-        // behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(ASizes.defaultSpace),
-            child: Center(
-              child: Column(
-                children: [
-                  ///Profile Image
-                  ProfileImage(user: user),
-                  const SizedBox(height: ASizes.spaceBtwItems),
+      body: Form(
+        key: formKey,
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(ASizes.defaultSpace),
+              child: Center(
+                child: Column(
+                  children: [
+                    ///Profile Image
+                    ProfileImage(user: user),
+                    const SizedBox(height: ASizes.spaceBtwItems),
 
-                  /// Email
-                  Text(AUserHelperFunctions.user.email.toString(),
-                      style: Theme.of(context).textTheme.headlineSmall),
-                  const SizedBox(height: ASizes.spaceBtwSections),
+                    /// Email
+                    Text(AUserHelperFunctions.user.email.toString(),
+                        style: Theme.of(context).textTheme.headlineSmall),
+                    const SizedBox(height: ASizes.spaceBtwSections),
 
-                  /// Name Field
-                  TextFormField(
-                    // initialValue: user.name,
-                    controller: logoutCtrl.nameController,
-                    decoration: const InputDecoration(
-                      labelText: ATexts.name,
-                      hintText: ATexts.nameHint,
-                      prefixIcon: Icon(Icons.person),
+                    /// Name Field
+                    TextFormField(
+                      // initialValue: user.name,
+                      controller: logoutCtrl.nameController,
+                      validator: (value) => (value != null && value.isNotEmpty)
+                          ? null
+                          : "Required Field",
+                      decoration: const InputDecoration(
+                        labelText: ATexts.name,
+                        hintText: ATexts.nameHint,
+                        prefixIcon: Icon(Icons.person),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: ASizes.spaceBtwItems),
+                    const SizedBox(height: ASizes.spaceBtwItems),
 
-                  /// About Field
-                  TextFormField(
-                    // initialValue: user.about,
-                    controller: logoutCtrl.aboutController,
-                    maxLines: 5,
-                    minLines: 1,
-                    decoration: const InputDecoration(
-                      labelText: ATexts.about,
-                      hintText: ATexts.aboutHint,
-                      prefixIcon: Icon(Icons.info_outline),
+                    /// About Field
+                    TextFormField(
+                      // initialValue: user.about,
+                      controller: logoutCtrl.aboutController,
+                      maxLines: 5,
+                      minLines: 1,
+                      decoration: const InputDecoration(
+                        labelText: ATexts.about,
+                        hintText: ATexts.aboutHint,
+                        prefixIcon: Icon(Icons.info_outline),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: ASizes.spaceBtwSections * 1.5),
+                    const SizedBox(height: ASizes.spaceBtwSections * 1.5),
 
-                  /// Update Button
-                  AElevatedButtonWithIcon(
-                    horizontalPadding: ASizes.spaceBtwSections * 2,
-                    text: ATexts.update.toUpperCase(),
-                    icon: const Icon(
-                      Icons.login,
-                      size: ASizes.iconXl,
-                      color: Colors.white,
-                    ),
-                    onPress: () =>
-                        logoutCtrl.updateUserData(context: context, user: user),
-                  )
-                ],
+                    /// Update Button
+                    AElevatedButtonWithIcon(
+                        horizontalPadding: ASizes.spaceBtwSections * 2,
+                        text: ATexts.update.toUpperCase(),
+                        icon: const Icon(
+                          Icons.login,
+                          size: ASizes.iconXl,
+                          color: Colors.white,
+                        ),
+                        onPress: () {
+                          if (formKey.currentState!.validate()) {
+                            logoutCtrl.updateUserData(
+                                context: context, user: user);
+                          }
+                        })
+                  ],
+                ),
               ),
             ),
           ),
@@ -114,7 +123,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           text: ATexts.logout,
           bgColor: Colors.red,
-          onPress: () => logoutCtrl.logout(context),
+          onPress: () {
+            return logoutCtrl.logout(context);
+          },
         ),
       ),
     );

@@ -26,20 +26,11 @@ class ProfileController extends GetxController {
     AHelperFunctions.showProgressBar(context);
     final String updatedName = nameController.text.toString();
     final String updatedAbout = aboutController.text.toString();
-    final updatedUserData = ChatUserModel(
-        id: user.id,
-        name: updatedName,
-        email: user.email,
-        about: updatedAbout,
-        image: user.image,
-        createdAt: user.createdAt,
-        lastActive: user.lastActive,
-        isOnline: user.isOnline,
-        pushToken: user.pushToken);
+    final updatedUserData = {'name': updatedName, 'about': updatedAbout};
     await Apis.fireStore
         .collection('users')
         .doc(user.id)
-        .set(updatedUserData.toJson())
+        .update(updatedUserData)
         .then((value) async {
       Apis.fireStore.collection('users').doc(user.id).get().then((user) {
         final updatedUser = ChatUserModel.fromJson(user.data()!);

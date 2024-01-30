@@ -14,6 +14,10 @@ class ATextFieldTheme {
       borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(color: AColors.darkGrey),
     ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: AColors.error),
+    ),
   );
 
   /// Dark TextFieldTheme
@@ -27,6 +31,10 @@ class ATextFieldTheme {
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(color: AColors.darkGrey),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: AColors.error),
     ),
   );
 }
