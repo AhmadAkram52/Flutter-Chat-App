@@ -1,5 +1,5 @@
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
-import 'package:a_chat/features/chat/screens/profile/widgets/buttom_sheet.dart';
+import 'package:a_chat/features/chat/screens/profile/widgets/profile_image_picker_bottom_sheet.dart';
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
