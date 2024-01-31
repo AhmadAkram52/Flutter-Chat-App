@@ -1,3 +1,4 @@
+import 'package:a_chat/features/chat/controllers/profile/profile_controller.dart';
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/features/chat/screens/profile/widgets/profile_image_picker_bottom_sheet.dart';
 import 'package:a_chat/util/constants/colors.dart';
@@ -15,6 +16,7 @@ class ProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileController profileCtrl = Get.put(ProfileController());
     return SizedBox(
       height: AHelperFunctions.screenWidth() * .5,
       width: AHelperFunctions.screenWidth() * .5,
@@ -39,12 +41,16 @@ class ProfileImage extends StatelessWidget {
                               size: AHelperFunctions.screenWidth() * .4),
                         ));
                   } else {
-                    return CircleAvatar(
-                      radius: AHelperFunctions.screenWidth() * .5,
-                      backgroundImage: NetworkImage(
-                        user.image,
-                      ),
-                    );
+                    return Obx(() {
+                      return CircleAvatar(
+                        radius: AHelperFunctions.screenWidth() * .5,
+                        backgroundImage: profileCtrl.isPicked.value
+                            ? FileImage(profileCtrl.img) as ImageProvider
+                            : NetworkImage(
+                                user.image,
+                              ),
+                      );
+                    });
                   }
                 },
               ),
