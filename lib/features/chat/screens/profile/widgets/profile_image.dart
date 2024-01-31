@@ -1,7 +1,9 @@
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
+import 'package:a_chat/features/chat/screens/profile/widgets/buttom_sheet.dart';
 import 'package:a_chat/util/constants/colors.dart';
 import 'package:a_chat/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileImage extends StatelessWidget {
   final ChatUserModel user;
@@ -23,9 +25,7 @@ class ProfileImage extends StatelessWidget {
               width: AHelperFunctions.screenWidth() * .5,
               // color: AColors.primary,
               child: FutureBuilder(
-                future: AHelperFunctions.loadImage(imageUrl: user.image
-                    // 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600',
-                    ),
+                future: AHelperFunctions.loadImage(imageUrl: user.image),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -43,7 +43,6 @@ class ProfileImage extends StatelessWidget {
                       radius: AHelperFunctions.screenWidth() * .5,
                       backgroundImage: NetworkImage(
                         user.image,
-                        // 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600',
                       ),
                     );
                   }
@@ -55,7 +54,7 @@ class ProfileImage extends StatelessWidget {
             right: 5,
             bottom: 5,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => Get.bottomSheet(const AImagePickerBottomSheet()),
               color: Colors.black,
               style: IconButton.styleFrom(
                   shadowColor: Colors.black,

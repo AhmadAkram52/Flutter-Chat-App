@@ -1,5 +1,5 @@
-import 'package:a_chat/common/widgets/chat_user_card.dart';
-import 'package:a_chat/common/widgets/floating_action_button.dart';
+import 'package:a_chat/common/widgets/button/floating_action_button.dart';
+import 'package:a_chat/common/widgets/card/chat_user_card.dart';
 import 'package:a_chat/features/chat/controllers/home/home_controller.dart';
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/features/chat/screens/home/widgets/home_app_bar.dart';
