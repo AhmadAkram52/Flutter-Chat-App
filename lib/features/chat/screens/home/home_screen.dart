@@ -1,22 +1,19 @@
 import 'package:a_chat/common/widgets/chat_user_card.dart';
 import 'package:a_chat/common/widgets/floating_action_button.dart';
+import 'package:a_chat/features/chat/controllers/home/home_controller.dart';
 import 'package:a_chat/features/chat/models/chat_user_model.dart';
 import 'package:a_chat/features/chat/screens/home/widgets/home_app_bar.dart';
 import 'package:a_chat/util/constants/sizes.dart';
 import 'package:a_chat/util/helpers/user_helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
-    List<ChatUserModel> userList = [];
+    final HomeController homeCtrl = Get.put(HomeController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const AHomeAppBar(),
@@ -34,20 +31,26 @@ class _HomeScreenState extends State<HomeScreen> {
               case ConnectionState.active:
               case ConnectionState.done:
                 final data = sn.data!.docs;
-                userList = data
+                homeCtrl.userList = data
                         .map((e) => ChatUserModel.fromJson(e.data()))
                         .toList() ??
                     [];
-                if (userList.isNotEmpty) {
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: userList.length,
-                    itemBuilder: (context, i) {
-                      return AChatUserCard(
-                        user: userList[i],
-                      );
-                    },
-                  );
+                if (homeCtrl.userList.isNotEmpty) {
+                  return Obx(() {
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: homeCtrl.isSearching.value
+                          ? homeCtrl.searchList.length
+                          : homeCtrl.userList.length,
+                      itemBuilder: (context, i) {
+                        return AChatUserCard(
+                          user: homeCtrl.isSearching.value
+                              ? homeCtrl.searchList[i]
+                              : homeCtrl.userList[i],
+                        );
+                      },
+                    );
+                  });
                 } else {
                   return const Center(child: Text("No Connection Found"));
                 }

@@ -12,19 +12,47 @@ class AHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeCtrl = Get.put(HomeController());
-    return AAppBar(
-      leading: const Icon(CupertinoIcons.home),
-      title: const Text('A Chat'),
-      action: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-        IconButton(
+    return Obx(() {
+      return AAppBar(
+        leading: const Icon(CupertinoIcons.home),
+        title: HomeController.homeCtrl.isSearching.value
+            ? TextFormField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: 'Search Here.....',
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      CupertinoIcons.clear_circled,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => HomeController.homeCtrl.isSearching.value =
+                        !HomeController.homeCtrl.isSearching.value,
+                  ),
+                ),
+                onChanged: (input) =>
+                    HomeController.homeCtrl.updateSearchList(input),
+              )
+            : const Text('A Chat'),
+        action: [
+          Visibility(
+            visible: !HomeController.homeCtrl.isSearching.value,
+            child: IconButton(
+              onPressed: () => HomeController.homeCtrl.isSearching.value =
+                  !HomeController.homeCtrl.isSearching.value,
+              icon: const Icon(Icons.search),
+            ),
+          ),
+          IconButton(
             onPressed: () {
-              homeCtrl.gotoProfile();
+              HomeController.homeCtrl.gotoProfile();
             },
-            icon: const Icon(Icons.more_vert_outlined)),
-      ],
-    );
+            icon: const Icon(Icons.more_vert_outlined),
+          ),
+        ],
+      );
+    });
   }
 
   @override
