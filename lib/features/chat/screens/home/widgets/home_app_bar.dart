@@ -23,13 +23,15 @@ class AHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   suffixIcon: IconButton(
-                    icon: const Icon(
-                      CupertinoIcons.clear_circled,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => HomeController.homeCtrl.isSearching.value =
-                        !HomeController.homeCtrl.isSearching.value,
-                  ),
+                      icon: const Icon(
+                        CupertinoIcons.clear_circled,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        HomeController.homeCtrl.isSearching.value =
+                            !HomeController.homeCtrl.isSearching.value;
+                        HomeController.homeCtrl.searchList.clear();
+                      }),
                 ),
                 onChanged: (input) =>
                     HomeController.homeCtrl.updateSearchList(input),

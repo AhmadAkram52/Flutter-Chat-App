@@ -14,53 +14,66 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeCtrl = Get.put(HomeController());
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: const AHomeAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(ASizes.sm),
-        child: StreamBuilder(
-          stream: AUserHelperFunctions.getUsers(),
-          builder: (context, sn) {
-            switch (sn.connectionState) {
-              case ConnectionState.waiting:
-              case ConnectionState.none:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              case ConnectionState.active:
-              case ConnectionState.done:
-                final data = sn.data!.docs;
-                homeCtrl.userList = data
-                        .map((e) => ChatUserModel.fromJson(e.data()))
-                        .toList() ??
-                    [];
-                if (homeCtrl.userList.isNotEmpty) {
-                  return Obx(() {
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: homeCtrl.isSearching.value
-                          ? homeCtrl.searchList.length
-                          : homeCtrl.userList.length,
-                      itemBuilder: (context, i) {
-                        return AChatUserCard(
-                          user: homeCtrl.isSearching.value
-                              ? homeCtrl.searchList[i]
-                              : homeCtrl.userList[i],
-                        );
-                      },
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: WillPopScope(
+        onWillPop: () {
+          if (homeCtrl.isSearching.value) {
+            homeCtrl.isSearching.value = !homeCtrl.isSearching.value;
+            return Future.value(false);
+          } else {
+            return Future.value(true);
+          }
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: const AHomeAppBar(),
+          body: Padding(
+            padding: const EdgeInsets.all(ASizes.sm),
+            child: StreamBuilder(
+              stream: AUserHelperFunctions.getUsers(),
+              builder: (context, sn) {
+                switch (sn.connectionState) {
+                  case ConnectionState.waiting:
+                  case ConnectionState.none:
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
-                  });
-                } else {
-                  return const Center(child: Text("No Connection Found"));
+                  case ConnectionState.active:
+                  case ConnectionState.done:
+                    final data = sn.data!.docs;
+                    homeCtrl.userList = data
+                            .map((e) => ChatUserModel.fromJson(e.data()))
+                            .toList() ??
+                        [];
+                    if (homeCtrl.userList.isNotEmpty) {
+                      return Obx(() {
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: homeCtrl.isSearching.value
+                              ? homeCtrl.searchList.length
+                              : homeCtrl.userList.length,
+                          itemBuilder: (context, i) {
+                            return AChatUserCard(
+                              user: homeCtrl.isSearching.value
+                                  ? homeCtrl.searchList[i]
+                                  : homeCtrl.userList[i],
+                            );
+                          },
+                        );
+                      });
+                    } else {
+                      return const Center(child: Text("No Connection Found"));
+                    }
                 }
-            }
-          },
+              },
+            ),
+          ),
+          floatingActionButton: AFloatingActionButton(
+            onPress: () {},
+            child: const Icon(Icons.add_comment_rounded),
+          ),
         ),
-      ),
-      floatingActionButton: AFloatingActionButton(
-        onPress: () {},
-        child: const Icon(Icons.add_comment_rounded),
       ),
     );
   }
